@@ -1,0 +1,58 @@
+<%- include('./partials/headerR') %> 
+<H1>JE SUIS POST</H1>
+<div class="container col-6">
+<% if(locals.data.success && locals.me.success ){ %> 
+   <% locals.data.success.reverse().map((post)=>{%>
+        
+             
+<div class="card mb-3 p-2" >
+    <div class="userinfo">
+        
+        <div class="user">
+            <img src="/img/uploads/<%= locals.me.success.attachement %>" class="imgprofile" alt="image">
+            <h6 class="card-title"><%= locals.me.success.username %> <small class="text-muted"><%= locals.data.success.createdAt %></small></h6>
+        </div>
+       
+            <form action="/delete?idpost=<%= post.id %>" method="post">
+                <button type="submit"  class="btnsup btn-outline-danger btn-sm"><i class="fa-regular fa-trash-can"></i></button>
+            </form>
+            <form method="POST" action="/profilepost">
+                <p>
+                <a class="btn btn-outline-success btn-sm" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"  id="changeinfo"aria-controls="collapseExample">
+                    <i class="fa-solid fa-pen-to-square "></i>
+                </a>
+                </p>
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                        <input type="text" class="form-control" name="content"  placeholder="content"  id="editcontent">
+                        <input type="file" name="attachement" class="form-control"><br>
+                    </div>
+                <button type="submit" class="btn btn-primary" id="change">Change</button>
+                </div>
+            </form>
+          
+    </div>
+    <p class="card-text" name="content"><%= post.content %></p>
+    <img src="/img/uploads/<%=post.attachement %>" class="img-fluid rounded-start" name="attachement"  alt="image">
+    <div class="cominfo">
+        <a href="#" class="linklike"><i class="fa-regular fa-heart"></i></a>
+        <div class="comments">
+            <a href="/comment?idpost=<%=post.id %>" class="linkcomment">Commentaires</a>
+
+           
+
+            <form action="/comment?idpost=<%=post.id %>" method="post">
+                    <div class="addcom">
+                        <input type="text" class="inputcom" name="content"  placeholder="Ajouter un commentaire">  
+                        <button type="submit" class="btn"><i class="fa-solid fa-comment-dots"></i></button>
+                    </div>
+            </form>
+        </div> 
+    </div>
+</div> 
+  
+
+<% }) %>
+<% } %> 
+</div>
+<%- include('./partials/footer') %> 

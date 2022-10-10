@@ -1,0 +1,112 @@
+<% if(!locals.me.success) { %>
+    <div class="alert alert-danger">
+        <h4>VEUILLEZ CONNECTER <a href="/register">ICI</a> </h4>
+    </div>
+<% } %>  
+<% if(locals.me.success) { %>
+
+<%- include('./partials/header') %> 
+<div class="container"> 
+    <div class="row "> 
+        <div class="col-sm-8">
+            <div class="card  mb-3 p-3" >
+                <div class="row g-0">
+                  <div class="col-md-2">
+                    <img src="/img/uploads/<%= me.success.attachement %>" class="imgprof" alt="image">
+                    <h5 class="card-title"><%= me.success.username %></h5>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                        <form action="/" method="post" onctype="multipart/form-data">
+                            <textarea class="form-control" placeholder="Ecrire ici" id="Textarea" style="height: 100px"></textarea>
+                            <div class="collapse" id="collapseExample">
+                                <input type="file" name="attachement" class="form-control">
+                            </div>
+                            <a class="btn btn-success" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                <i class="fa-solid fa-image"></i>
+                            </a>
+                            <input type="submit" value="Publier" class="btn btn-success">
+                        </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% if(locals.data.allUsers && locals.data.allPosts && locals.me.success){ %> 
+                <% locals.data.allPosts.reverse().map((post)=>{%>
+                    <% locals.data.allUsers.map((user)=>{%>
+                        <% if(user.id === post.userId){ %> 
+                            <div class="card mb-3 p-2" >
+                                <div class="userinfo">
+                                    <div class="user">
+                                        <img src="/img/uploads/<%= user.attachement %>" class="imgprofile" alt="image">
+                                        <h6 class="card-title"><%= user.username %> <small class="text-muted"><%= post.createdAt %></small></h6>
+                                    </div>
+                                    <div class="usericon">
+                                    <% if( locals.me.success.id === post.userId){ %> 
+                                        <form action="/delete?idpost=<%= post.id %>" method="post">
+                                            <button type="submit"  class="btnsup btn-outline-danger btn-sm" onClick= 'return confirm("Voulez-vous vraiment supprimer cet post ?")'>
+                                                <i class="fa-regular fa-trash-can"></i>
+                                            </button>
+                                        </form>
+                                        <form method="POST" action="/update/<%= post.id %>"  onctype="multipart/form-data">
+                                            <a class="btn btn-outline-success btn-sm" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"  id="changeinfo" aria-controls="collapseExample">
+                                                <i class="fa-solid fa-pen-to-square "></i> </a>
+                                            <div class="collapse" id="collapseExample">
+                                                <div class="card card-body">
+                                                    <input type="text" class="form-control" name="content"  placeholder="content"  id="editcontent">
+                                                    <input type="file" name="attachement" class="form-control" id="editattachement">
+                                                </div>
+                                            <button type="submit" class="btn btn-primary" id="change">Change</button>
+                                            </div>
+                                        </form>
+                                    <% } %> 
+                                    </div>    
+                                </div>
+                                <p class="card-text" name="content"><%= post.content %></p>
+                                <img  name="attachement" src="/img/uploads/<%= post.attachement %>" class="img-fluid rounded-start"   alt="image">
+                                <div class="cominfo">
+                                    <form action="/postlike/<%= post.id %>" method="post">
+                                        <button type="submit"><i class="fa-solid fa-thumbs-up"></i></button>
+                                    </form>
+                                    <span> likesnbr:<%= post.likesCount %></span>
+
+                                    <form action="/postunlike/<%= post.id %>" method="post">
+                                         <button type="submit"><i class="fa-solid fa-thumbs-down"></i></button>
+                                    </form>
+                                    <div class="comments">
+                                        <a href="/comment?idpost=<%= post.id %>" class="linkcomment">Commentaires</a>
+                                         
+                                       
+
+                                        <form action="/comment?idpost=<%= post.id %>" method="post">
+                                                <div class="addcom" id="addcom">
+                                                    <input type="text" class="inputcom" name="content"  placeholder="Ajouter un commentaire">  
+                                                    <button type="submit" class="btn"><i class="fa-solid fa-comment-dots"></i></button>
+                                                </div>
+                                        </form>
+                                    </div> 
+                                </div>
+                            </div> 
+                        <% } %>     
+                    <%}) %> 
+                <% }) %>
+            <% } %> 
+        </div>
+        <div class="col-sm-4">
+            <h3>Here all users</h3>
+            <% if(locals.data.allUsers && locals.data.allPosts && locals.me.success){ %> 
+                <% locals.data.allUsers.map((user)=>{%>     
+                    <div class="userinfo">
+                        <div class="user">
+                           <img src="/img/uploads/<%= user.attachement %>" class="imgprof" alt="image">
+                            <h5 class="card-title"><%= user.username %></h5>
+                        </div>
+                    </div>    
+               <%}) %> 
+           <% } %>
+        </div>
+    </div>
+</div> 
+
+<%- include('./partials/footer'); %>
+<% } %>

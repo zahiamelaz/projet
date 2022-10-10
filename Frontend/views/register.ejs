@@ -1,0 +1,35 @@
+<%- include('./partials/headerR'); %>
+
+<main>
+    <% if(locals.error) { %>
+        <div class="alert alert-danger">
+            <%- locals.error %>
+        </div>
+    <% } %>
+    <div class="carte">
+        <div class="links">
+            <a href="/register" class="register">S'inscrire</a>
+            <hr>
+            <a href="/login"class="login">Connexion</a>
+        </div>
+        <div class="logos">
+            <p class="typewriter">Best Learning</p>   
+        </div>              
+        <form method="POST" action="/register">
+            <div class="champ">               
+                <input type="text" class="inputreg" name="username" id="username" placeholder="Pseudo">
+                <div class="error"></div>
+            </div>
+            <div class="champ">                
+                <input type="text" class="inputreg" name="email" id="email" placeholder="Email">
+                <div class="error"></div>
+            </div>
+            <div class="champ">                
+                <input type="password" class="inputreg" name="password" id="password" placeholder="Votre mot de passe">
+                <div class="error"></div>
+            </div>
+            <button  type="submit" class="submit-btn" id="submit">Envoyer</button>
+        </form>        
+    </div>
+</main>
+<%- include('./partials/footer'); %>

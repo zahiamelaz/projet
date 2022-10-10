@@ -1,0 +1,35 @@
+<%- include('./partials/headerR'); %>
+  <div class="container"> 
+        <div class=" card col-6 mt-3">
+             <div class=" card-header">
+                 <h5 class="card-header">Commentaires</h5>
+                 <a href="/"><i class="fa-regular fa-circle-xmark"></i></a>
+             </div>
+             <% console.log(locals); %> 
+     <% if(locals.success  && locals.me.success){ %>   
+        <% for (var i=locals.success.length-1;i>=0;i--){ %> 
+             <div class="col">
+                <div class="card-body">
+                        <div class="comment">
+                        <img src="/img/uploads/<%= locals.success[i].attachement %>" class="imgprofile" alt="image">
+                        <div class="infocoms">
+                                <p class="contentcom"><strong><%=locals.success[i].userId %></strong><%= locals.success[i].content %></p>
+                                <small class="small"><%=locals.success[i].createdAt %></small>
+                        </div>
+                        </div>
+                        <form action="/deletecomment/<%= locals.success[i].id %>" method="post" id="form">
+                         <button type="submit"  class="btnsup btn-outline-danger btn-sm"><i class="fa-regular fa-trash-can"></i></button>
+                        </form>
+                </div>       
+                
+             </div> 
+        <% } %>  
+        
+         
+        
+         <% } %>
+      
+                 
+        </div>   
+</div>
+<%- include('./partials/footer'); %>

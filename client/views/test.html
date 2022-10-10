@@ -1,0 +1,22 @@
+<% if(locals.data.allUsers && locals.data.allPosts&& locals.me.success){ %> 
+    <% locals.data.allUsers.map((user)=>{%>
+        <% locals.data.allPosts.map((post)=>{%>
+        <% if(user.id=== post.userId ){ %> 
+            <div class="col-12 m-auto">
+                <div class="owl-carousel owl-theme">
+                    <div class="item mb-4">
+                        <div class="card border-0 shadow">
+                            <img src="/img/uploads/<%= post.attachement %>" alt="" class="card-img-top">
+                            <div class="card-body">
+                                <div class="card-title text-center">
+                                    <h4>hjhjju</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% } %>     
+    <%}) %> 
+ <% }) %>   
+<% } %> 

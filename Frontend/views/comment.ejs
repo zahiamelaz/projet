@@ -1,0 +1,47 @@
+<%- include('./partials/headerR'); %>
+    <div class="container"> 
+        <div class=" card col-6 mt-3">
+            <div class=" card-header">
+                <h5 class="card-header">Commentaires</h5>
+                <a href="/"><i class="fa-regular fa-circle-xmark"></i></a>
+            </div>         
+            <% console.log('oooooooo',locals.data) %>  
+            <% if(locals.me.success && locals.data){ %> 
+                <% locals.data.allUsers.map((user)=>{ %>
+                    <% locals.data.allComments.map((com)=>{ %> 
+                        <% if(user.id === com.userId){ %>             
+                            <div class="col">                                
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="comment col-10">
+                                            <img src="/img/uploads/<%= user.attachement %> " class="imgprofile" alt="image">
+                                            <div class="infocoms">
+                                                    <p class="contentcom"><strong><%=user.username %> </strong><%= com.content %></p>
+                                                    <small class="small"><%= com.createdAt%> </small>
+                                            </div>
+                                        </div>
+                                        <div class="col-2"> 
+                                        <% console.log('hhhhhhhh',com.userId) %> 
+                                        <% console.log('dddddddddddd',locals.me.success.id) %>
+                                        <% if(locals.me.success.id === com.userId){ %> 
+                                            
+                                            <form action="/deletecomment?id=<%= com.id %>" method="post" id="form">
+                                                <button type="submit"  class="btnsup btn-outline-danger btn-sm"><i class="fa-regular fa-trash-can"></i></button>
+                                            </form>
+                                        <% } %>  
+                                        </div> 
+                                    </div>     
+                                </div>           
+                            </div>
+                        <% } %>
+                    <% }) %> 
+                <% }) %> 
+            <% } %>
+            <% if(locals.data.allComments == ""){%>
+                <P class="alert alert-danger">Vous n'avez pas des commentaires.
+                    <a href="/#addcom">Click ici</a>pour ajouter un commentaire
+                </P>
+            <% } %>  
+        </div>   
+    </div>
+<%- include('./partials/footer'); %>
